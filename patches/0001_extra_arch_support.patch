@@ -1,0 +1,31 @@
+diff -ur externals.orig/mono/configure.ac externals/mono/configure.ac
+--- externals.orig/mono/configure.ac	2019-06-28 13:38:14.000000000 +0100
++++ externals/mono/configure.ac	2021-11-12 17:49:39.735708035 +0000
+@@ -335,6 +335,7 @@
+ 		has_dtrace=yes
+ 		if test "x$cross_compiling" = "xyes"; then
+ 			has_broken_apple_cpp=yes
++                        mono_cv_uscore=no
+ 		fi
+ 		dnl Snow Leopard is horribly broken -- it reports itself as i386-apple-darwin*, but
+ 		dnl its gcc defaults to 64-bit mode.  They have also deprecated the usage of ucontext
+Only in externals/mono: configure.ac~
+diff -ur externals.orig/mono/support/fstab.c externals/mono/support/fstab.c
+--- externals.orig/mono/support/fstab.c	2019-06-28 13:38:14.000000000 +0100
++++ externals/mono/support/fstab.c	2021-11-12 17:51:23.376935482 +0000
+@@ -334,6 +334,15 @@
+ 
+ #endif /* def HAVE_FSTAB_H || def HAVE_CHECKPOINT_H || def HAVE_SYS_VFSTAB_H */
+ 
++#if !defined(HAVE_FSTAB_H) && !defined(HAVE_SYS_VFSTAB_H)
++gint32
++Mono_Posix_Syscall_getfsfile (const char *mount_point,
++                              struct Mono_Posix_Syscall__Fstab *fsbuf)
++{
++  return 1;
++}
++#endif
++
+ G_END_DECLS
+ 
+ /*

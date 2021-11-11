@@ -11,3 +11,5 @@ fi
 rm -rf externals
 mkdir -p externals/mono
 tar xf "$FILE" --strip-components 1 -C externals/mono
+
+patch -p0 < patches/0001_extra_arch_support.patch
