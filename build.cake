@@ -9,7 +9,7 @@ var DEFAULT_SN_EXE = IsRunningOnWindows()
 var TARGET = Argument("t", Argument("target", "nuget"));
 var SN_EXE = Argument("sn", EnvironmentVariable("SN_EXE") ?? DEFAULT_SN_EXE);
 
-var NUGET_VERSION = "5.20.1-preview";
+var NUGET_VERSION = EnvironmentVariable("NUGETVERSION") ?? "5.20.1-preview";
 
 Task("libs")
 	.Does(() =>

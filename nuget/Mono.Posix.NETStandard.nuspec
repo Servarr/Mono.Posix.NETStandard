@@ -49,5 +49,8 @@
     <file src="working/lib/unix/Mono.Posix.NETStandard.dll" target="runtimes/linux-musl-arm64/lib/netstandard2.0/" />
     <file src="working/lib/unix/Mono.Posix.NETStandard.pdb" target="runtimes/linux-musl-arm64/lib/netstandard2.0/" />
 
+    <file src="externals/artifacts/freebsd-x64/libMonoPosixHelper.so" target="runtimes/freebsd-x64/native/" />
+    <file src="working/lib/unix/Mono.Posix.NETStandard.dll" target="runtimes/freebsd-x64/lib/netstandard2.0/" />
+    <file src="working/lib/unix/Mono.Posix.NETStandard.pdb" target="runtimes/freebsd-x64/lib/netstandard2.0/" />
   </files>
 </package>

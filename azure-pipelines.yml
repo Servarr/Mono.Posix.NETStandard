@@ -64,13 +64,15 @@ stages:
             #   folder: 'osx-arm64'
             #   poolName: 'Azure Pipelines'
             #   imageName: 'macOS-11'
-            # freebsd-x64:
-            #   folder: 'freebsd-x64'
-            #   poolName: 'FreeBSD'
-            #   imageName:
+            freebsd-x64:
+              folder: 'freebsd-x64'
+              poolName: 'FreeBSD'
+              imageName:
         pool:
           name: $(poolName)
           vmImage: $(imageName)
+        workspace:
+          clean: all
         steps:
           - bash: |
               ./get_mono.sh $MONOVERSION
@@ -86,6 +88,8 @@ stages:
         pool:
           vmImage: 'ubuntu-20.04'
         steps:
+          - bash: ./get_mono.sh $MONOVERSION
+            displayName: Download mono
           - task: DownloadPipelineArtifact@2
             inputs:
               buildType: 'current'
@@ -116,21 +120,13 @@ stages:
               buildType: 'current'
               artifactName: linux-musl-arm
               targetPath: externals/artifacts/linux-musl-arm
-
-          # - task: DownloadPipelineArtifact@2
-          #   inputs:
-          #     buildType: 'current'
-          #     artifactName: ffmpeg-freebsd-x64
-          #     targetPath: freebsd-x64/output
-          # - task: DownloadPipelineArtifact@2
-          #   inputs:
-          #     buildType: 'current'
-          #     artifactName: ffmpeg-osx-x64
-          #     targetPath: osx-x64/output
+          - task: DownloadPipelineArtifact@2
+            inputs:
+              buildType: 'current'
+              artifactName: freebsd-x64
+              targetPath: externals/artifacts/freebsd-x64
           - bash: |
               ls -lR externals/artifacts
-              sed -i'' -e "s/<version>[0-9.*]\+<\/version>/<version>${NUGETVERSION}<\/version>/g" nuget/Mono.Posix.NETStandard.nuspec
-          - bash: |
               dotnet new tool-manifest
               dotnet tool install Cake.Tool --version 0.38.5
               dotnet cake
@@ -142,5 +138,5 @@ stages:
               command: 'push'
               packagesToPush: 'output/**/*.nupkg'
               nuGetFeedType: 'internal'
-              publishVstsFeed: '7ab38f4e-5a57-4d70-84f4-94dd9bc5d6df/783c2dce-dbc3-4218-8816-4a5e12af4d84'
+              publishVstsFeed: '7ab38f4e-5a57-4d70-84f4-94dd9bc5d6df/9845f7c9-6c8c-4845-b5ee-58375c59e0d8'
             condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
