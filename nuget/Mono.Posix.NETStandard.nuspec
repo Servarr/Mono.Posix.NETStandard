@@ -25,6 +25,10 @@
     <file src="working/lib/unix/Mono.Posix.NETStandard.dll" target="runtimes/osx-x64/lib/netstandard2.0/"/>
     <file src="working/lib/unix/Mono.Posix.NETStandard.pdb" target="runtimes/osx-x64/lib/netstandard2.0/"/>
 
+    <file src="externals/artifacts/osx-arm64/libMonoPosixHelper.dylib" target="runtimes/osx-arm64/native/"/>
+    <file src="working/lib/unix/Mono.Posix.NETStandard.dll" target="runtimes/osx-arm64/lib/netstandard2.0/"/>
+    <file src="working/lib/unix/Mono.Posix.NETStandard.pdb" target="runtimes/osx-arm64/lib/netstandard2.0/"/>
+
     <file src="externals/artifacts/linux-x64/libMonoPosixHelper.so" target="runtimes/linux-x64/native/" />
     <file src="working/lib/unix/Mono.Posix.NETStandard.dll" target="runtimes/linux-x64/lib/netstandard2.0/" />
     <file src="working/lib/unix/Mono.Posix.NETStandard.pdb" target="runtimes/linux-x64/lib/netstandard2.0/" />
