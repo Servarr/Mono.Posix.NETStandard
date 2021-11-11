@@ -1,0 +1,146 @@
+variables:
+  monoVersion: '5.20.1.34'
+  minorVersion: $[counter('minorVersion', 1)]
+  nugetVersion: '$(monoVersion)-servarr$(minorVersion)'
+
+trigger:
+  branches:
+    include:
+    - master
+
+pr:
+  branches:
+    include:
+    - master
+
+stages:
+  - stage: Setup
+    displayName: Setup
+    jobs:
+      - job:
+        displayName: Build Variables
+        pool:
+          vmImage: 'ubuntu-20.04'
+        steps:
+          - bash: echo "##vso[build.updatebuildnumber]$NUGETVERSION"
+            displayName: Set Build Name
+
+  - stage: Native
+    dependsOn: []
+    displayName: Build Native Library
+    jobs:
+      - job: build
+        strategy:
+          matrix:
+            linux-x64:
+              folder: 'linux-x64'
+              poolName: 'Azure Pipelines'
+              imageName: 'ubuntu-20.04'
+            linux-arm:
+              folder: 'linux-arm'
+              poolName: 'Azure Pipelines'
+              imageName: 'ubuntu-20.04'
+            linux-arm64:
+              folder: 'linux-arm64'
+              poolName: 'Azure Pipelines'
+              imageName: 'ubuntu-20.04'
+            linux-musl-x64:
+              folder: 'linux-musl-x64'
+              poolName: 'Azure Pipelines'
+              imageName: 'ubuntu-20.04'
+            linux-musl-arm:
+              folder: 'linux-musl-arm'
+              poolName: 'Azure Pipelines'
+              imageName: 'ubuntu-20.04'
+            linux-musl-arm64:
+              folder: 'linux-musl-arm64'
+              poolName: 'Azure Pipelines'
+              imageName: 'ubuntu-20.04'
+            # osx-x64:
+            #   folder: 'osx-x64'
+            #   poolName: 'Azure Pipelines'
+            #   imageName: 'macOS-11'
+            # osx-arm64:
+            #   folder: 'osx-arm64'
+            #   poolName: 'Azure Pipelines'
+            #   imageName: 'macOS-11'
+            # freebsd-x64:
+            #   folder: 'freebsd-x64'
+            #   poolName: 'FreeBSD'
+            #   imageName:
+        pool:
+          name: $(poolName)
+          vmImage: $(imageName)
+        steps:
+          - bash: |
+              ./get_mono.sh $MONOVERSION
+              ${FOLDER}/build.sh
+            displayName: Build
+          - publish: $(folder)/output
+            artifact: $(folder)
+            displayName: Publish libMonoPosixHelper
+
+  - stage: Package
+    jobs:
+      - job: Nuget
+        pool:
+          vmImage: 'ubuntu-20.04'
+        steps:
+          - task: DownloadPipelineArtifact@2
+            inputs:
+              buildType: 'current'
+              artifactName: linux-x64
+              targetPath: externals/artifacts/linux-x64
+          - task: DownloadPipelineArtifact@2
+            inputs:
+              buildType: 'current'
+              artifactName: linux-arm64
+              targetPath: externals/artifacts/linux-arm64
+          - task: DownloadPipelineArtifact@2
+            inputs:
+              buildType: 'current'
+              artifactName: linux-arm
+              targetPath: externals/artifacts/linux-arm
+          - task: DownloadPipelineArtifact@2
+            inputs:
+              buildType: 'current'
+              artifactName: linux-musl-x64
+              targetPath: externals/artifacts/linux-musl-x64
+          - task: DownloadPipelineArtifact@2
+            inputs:
+              buildType: 'current'
+              artifactName: linux-musl-arm64
+              targetPath: externals/artifacts/linux-musl-arm64
+          - task: DownloadPipelineArtifact@2
+            inputs:
+              buildType: 'current'
+              artifactName: linux-musl-arm
+              targetPath: externals/artifacts/linux-musl-arm
+
+          # - task: DownloadPipelineArtifact@2
+          #   inputs:
+          #     buildType: 'current'
+          #     artifactName: ffmpeg-freebsd-x64
+          #     targetPath: freebsd-x64/output
+          # - task: DownloadPipelineArtifact@2
+          #   inputs:
+          #     buildType: 'current'
+          #     artifactName: ffmpeg-osx-x64
+          #     targetPath: osx-x64/output
+          - bash: |
+              ls -lR externals/artifacts
+              sed -i'' -e "s/<version>[0-9.*]\+<\/version>/<version>${NUGETVERSION}<\/version>/g" nuget/Mono.Posix.NETStandard.nuspec
+          - bash: |
+              dotnet new tool-manifest
+              dotnet tool install Cake.Tool --version 0.38.5
+              dotnet cake
+            displayName: Build nuget
+          - publish: output
+            artifact: nuget
+          - task: DotNetCoreCLI@2
+            inputs:
+              command: 'push'
+              packagesToPush: 'output/**/*.nupkg'
+              nuGetFeedType: 'internal'
+              publishVstsFeed: '7ab38f4e-5a57-4d70-84f4-94dd9bc5d6df/783c2dce-dbc3-4218-8816-4a5e12af4d84'
+            condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))

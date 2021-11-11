@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<package>
+  <metadata>
+    <id>Mono.Posix.NETStandard</id>
+    <version>$version$</version>
+    <authors>Microsoft</authors>
+    <owners>Microsoft</owners>
+    <licenseUrl>https://go.microsoft.com/fwlink/?linkid=869050</licenseUrl>
+    <projectUrl>https://go.microsoft.com/fwlink/?linkid=869051</projectUrl>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <description>Provides functionality to access Posix/Unix features</description>
+    <copyright>© Microsoft Corporation. All rights reserved.</copyright>
+    <frameworkAssemblies>
+      <frameworkAssembly assemblyName="Mono.Posix" targetFramework="net40" />
+    </frameworkAssemblies>
+  </metadata>
+  <files>
+    <file src="working/lib/any/Mono.Posix.NETStandard.dll" target="ref/netstandard2.0/" />
+    <file src="working/lib/any/Mono.Posix.NETStandard.pdb" target="ref/netstandard2.0/" />
+
+    <file src="working/ref/Mono.Posix.NETStandard.dll" target="ref/net40/" />
+    <file src="working/ref/Mono.Posix.NETStandard.dll" target="lib/net40/" />
+
+    <!-- <file src="externals/artifacts/osx-x64/libMonoPosixHelper.dylib" target="runtimes/osx-x64/native/"/> -->
+    <!-- <file src="working/lib/unix/Mono.Posix.NETStandard.dll" target="runtimes/osx-x64/lib/netstandard2.0/"/> -->
+    <!-- <file src="working/lib/unix/Mono.Posix.NETStandard.pdb" target="runtimes/osx-x64/lib/netstandard2.0/"/> -->
+
+    <file src="externals/artifacts/linux-x64/libMonoPosixHelper.so" target="runtimes/linux-x64/native/" />
+    <file src="working/lib/unix/Mono.Posix.NETStandard.dll" target="runtimes/linux-x64/lib/netstandard2.0/" />
+    <file src="working/lib/unix/Mono.Posix.NETStandard.pdb" target="runtimes/linux-x64/lib/netstandard2.0/" />
+
+    <file src="externals/artifacts/linux-arm/libMonoPosixHelper.so" target="runtimes/linux-arm/native/" />
+    <file src="working/lib/unix/Mono.Posix.NETStandard.dll" target="runtimes/linux-arm/lib/netstandard2.0/" />
+    <file src="working/lib/unix/Mono.Posix.NETStandard.pdb" target="runtimes/linux-arm/lib/netstandard2.0/" />
+
+    <file src="externals/artifacts/linux-arm64/libMonoPosixHelper.so" target="runtimes/linux-arm64/native/" />
+    <file src="working/lib/unix/Mono.Posix.NETStandard.dll" target="runtimes/linux-arm64/lib/netstandard2.0/" />
+    <file src="working/lib/unix/Mono.Posix.NETStandard.pdb" target="runtimes/linux-arm64/lib/netstandard2.0/" />
+
+    <file src="externals/artifacts/linux-musl-x64/libMonoPosixHelper.so" target="runtimes/linux-musl-x64/native/" />
+    <file src="working/lib/unix/Mono.Posix.NETStandard.dll" target="runtimes/linux-musl-x64/lib/netstandard2.0/" />
+    <file src="working/lib/unix/Mono.Posix.NETStandard.pdb" target="runtimes/linux-musl-x64/lib/netstandard2.0/" />
+
+    <file src="externals/artifacts/linux-musl-arm/libMonoPosixHelper.so" target="runtimes/linux-musl-arm/native/" />
+    <file src="working/lib/unix/Mono.Posix.NETStandard.dll" target="runtimes/linux-musl-arm/lib/netstandard2.0/" />
+    <file src="working/lib/unix/Mono.Posix.NETStandard.pdb" target="runtimes/linux-musl-arm/lib/netstandard2.0/" />
+
+    <file src="externals/artifacts/linux-musl-arm64/libMonoPosixHelper.so" target="runtimes/linux-musl-arm64/native/" />
+    <file src="working/lib/unix/Mono.Posix.NETStandard.dll" target="runtimes/linux-musl-arm64/lib/netstandard2.0/" />
+    <file src="working/lib/unix/Mono.Posix.NETStandard.pdb" target="runtimes/linux-musl-arm64/lib/netstandard2.0/" />
+
+  </files>
+</package>
