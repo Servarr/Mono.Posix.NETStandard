@@ -56,10 +56,10 @@ stages:
               folder: 'linux-musl-arm64'
               poolName: 'Azure Pipelines'
               imageName: 'ubuntu-20.04'
-            # osx-x64:
-            #   folder: 'osx-x64'
-            #   poolName: 'Azure Pipelines'
-            #   imageName: 'macOS-11'
+            osx-x64:
+              folder: 'osx-x64'
+              poolName: 'Azure Pipelines'
+              imageName: 'macOS-11'
             # osx-arm64:
             #   folder: 'osx-arm64'
             #   poolName: 'Azure Pipelines'
@@ -125,6 +125,11 @@ stages:
               buildType: 'current'
               artifactName: freebsd-x64
               targetPath: externals/artifacts/freebsd-x64
+          - task: DownloadPipelineArtifact@2
+            inputs:
+              buildType: 'current'
+              artifactName: osx-x64
+              targetPath: externals/artifacts/osx-x64
           - bash: |
               ls -lR externals/artifacts
               dotnet new tool-manifest
