@@ -41,6 +41,10 @@
     <file src="working/lib/unix/Mono.Posix.NETStandard.dll" target="runtimes/linux-arm/lib/netstandard2.0/" />
     <file src="working/lib/unix/Mono.Posix.NETStandard.pdb" target="runtimes/linux-arm/lib/netstandard2.0/" />
 
+    <file src="externals/artifacts/linux-arm-vfpv3d16/libMonoPosixHelper.so" target="runtimes/linux-arm-vfpv3d16/native/" />
+    <file src="working/lib/unix/Mono.Posix.NETStandard.dll" target="runtimes/linux-arm-vfpv3d16/lib/netstandard2.0/" />
+    <file src="working/lib/unix/Mono.Posix.NETStandard.pdb" target="runtimes/linux-arm-vfpv3d16/lib/netstandard2.0/" />
+
     <file src="externals/artifacts/linux-arm64/libMonoPosixHelper.so" target="runtimes/linux-arm64/native/" />
     <file src="working/lib/unix/Mono.Posix.NETStandard.dll" target="runtimes/linux-arm64/lib/netstandard2.0/" />
     <file src="working/lib/unix/Mono.Posix.NETStandard.pdb" target="runtimes/linux-arm64/lib/netstandard2.0/" />
