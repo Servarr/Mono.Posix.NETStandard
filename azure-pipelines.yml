@@ -44,6 +44,10 @@ stages:
               folder: 'linux-arm'
               poolName: 'Azure Pipelines'
               imageName: 'ubuntu-20.04'
+            linux-arm-vfpv3d16:
+              folder: 'linux-arm-vfpv3d16'
+              poolName: 'Azure Pipelines'
+              imageName: 'ubuntu-20.04'
             linux-arm64:
               folder: 'linux-arm64'
               poolName: 'Azure Pipelines'
@@ -114,6 +118,11 @@ stages:
               buildType: 'current'
               artifactName: linux-arm
               targetPath: externals/artifacts/linux-arm
+          - task: DownloadPipelineArtifact@2
+            inputs:
+              buildType: 'current'
+              artifactName: linux-arm-vfpv3d16
+              targetPath: externals/artifacts/linux-arm-vfpv3d16
           - task: DownloadPipelineArtifact@2
             inputs:
               buildType: 'current'
